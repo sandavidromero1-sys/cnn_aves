@@ -19,7 +19,7 @@ MODELOS_DIR = os.path.join(BASE_DIR, "models")
 os.makedirs(MODELOS_DIR, exist_ok=True)
 
 # =========================
-# Descargar modelo cuántico (único que se usa realmente)
+# Descargar modelo cuántico 
 # =========================
 cuantico_path = os.path.join(MODELOS_DIR, "modelo_cuantico_simulado_aves_final.keras")
 if not os.path.exists(cuantico_path):
@@ -39,7 +39,7 @@ if not os.path.exists(ESPECIES_DIR):
     
     os.remove(zip_path)
 
-# Diccionario de modelos (solo por nombre, todos usan el mismo archivo cuantico)
+# Diccionario de modelos
 MODELOS = {
     "VGG16": cuantico_path,
     "Xception": cuantico_path,
@@ -204,6 +204,7 @@ if uploaded_file is not None:
                 st.image(img_especie_path, caption=f"Ejemplo de {especie_predicha}", use_container_width=True)
             else:
                 st.warning("⚠️ No hay imagen de referencia disponible para esta especie.")
+
 
 
 

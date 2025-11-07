@@ -119,7 +119,7 @@ Apoyar la investigación, educación ambiental y conservación de la biodiversid
 # CABECERA
 # =====================================================
 st.title("🦜 Clasificación Automática de Aves")
-st.write("Selecciona un modelo y sube una imagen para identificar la especie del ave. Accipiter bicolor – Gavilán bicolor,Ardea cocoi – Garza mora o garza ceniza, Buteo albigula – Busardo de garganta blanca, Cathartes burrovianus – Zopilote cabecirrojo menor o gallinazo sabanero, Chondrohierax uncinatus – Gavilán caracolero, Dryocopus lineatus – Carpintero lineado, Egretta thula – Garceta nívea, Falco columbarius – Esmerejón,Melanerpes formicivorus – Carpintero bellotero, Sarcoramphus papa – Zopilote rey o cóndor real")
+st.write("Selecciona un modelo y sube una imagen para identificar la especie del ave de alguna de las siguientes especies:( Accipiter bicolor – Gavilán bicolor,Ardea cocoi – Garza mora o garza ceniza, Buteo albigula – Busardo de garganta blanca, Cathartes burrovianus – Zopilote cabecirrojo menor o gallinazo sabanero, Chondrohierax uncinatus – Gavilán caracolero, Dryocopus lineatus – Carpintero lineado, Egretta thula – Garceta nívea, Falco columbarius – Esmerejón,Melanerpes formicivorus – Carpintero bellotero, Sarcoramphus papa – Zopilote rey o cóndor real)")
 
 # =====================================================
 # FUNCIONES
@@ -204,6 +204,7 @@ if uploaded_file is not None:
                 st.image(img_especie_path, caption=f"Ejemplo de {especie_predicha}", use_container_width=True)
             else:
                 st.warning("⚠️ No hay imagen de referencia disponible para esta especie.")
+
 
 
 

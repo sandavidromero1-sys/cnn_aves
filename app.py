@@ -19,16 +19,8 @@ MODELOS_DIR = os.path.join(BASE_DIR, "models")
 os.makedirs(MODELOS_DIR, exist_ok=True)
 
 # =========================
-# Descargar modelos si no existen
+# Descargar modelo cuántico (único que se usa realmente)
 # =========================
-vgg_path = os.path.join(MODELOS_DIR, "vgg16_aves_final.keras")
-if not os.path.exists(vgg_path):
-    gdown.download("https://drive.google.com/uc?id=1XxRzz3sp_SDKFzxds7A3gFsVaNpkMcfr", vgg_path, quiet=False)
-
-xception_path = os.path.join(MODELOS_DIR, "xception_aves_final.keras")
-if not os.path.exists(xception_path):
-    gdown.download("https://drive.google.com/uc?id=1O-INGJMoeT84dGEq2sRrnoeBjCWKVIWn", xception_path, quiet=False)
-
 cuantico_path = os.path.join(MODELOS_DIR, "modelo_cuantico_simulado_aves_final.keras")
 if not os.path.exists(cuantico_path):
     gdown.download("https://drive.google.com/uc?id=1-qumvQ7c2Ipd5h-QF7rEYLRcoJMEcDpk", cuantico_path, quiet=False)
@@ -47,10 +39,10 @@ if not os.path.exists(ESPECIES_DIR):
     
     os.remove(zip_path)
 
-# Diccionario de modelos
+# Diccionario de modelos (solo por nombre, todos usan el mismo archivo cuantico)
 MODELOS = {
-    "VGG16": vgg_path,
-    "Xception": xception_path,
+    "VGG16": cuantico_path,
+    "Xception": cuantico_path,
     "Cuántico Simulado": cuantico_path
 }
 
@@ -114,7 +106,7 @@ Esta aplicación usa modelos de **inteligencia artificial** para reconocer espec
 
 ### ⚙️ Funcionalidad:
 - Permite **subir una foto** de un ave.
-- Clasifica la especie usando tres modelos: **VGG16**, **Xception**, **Cuántico Simulado**.
+- Clasifica la especie usando tres modelos (en esta versión, todos usan el modelo cuántico funcional).
 - Muestra las **3 especies más probables** con su porcentaje de certeza.
 
 ### 🌱 Propósito:
@@ -134,17 +126,14 @@ st.write("Selecciona un modelo y sube una imagen para identificar la especie del
 # =====================================================
 @st.cache_resource
 def cargar_modelo(nombre_modelo):
-    if "cuantico" in nombre_modelo.lower():
-        modelo = tf.keras.models.load_model(
-            nombre_modelo, 
-            custom_objects={"SimulatedQuantumLayer": SimulatedQuantumLayer}
-        )
-    else:
-        modelo = tf.keras.models.load_model(nombre_modelo)
+    modelo = tf.keras.models.load_model(
+        nombre_modelo, 
+        custom_objects={"SimulatedQuantumLayer": SimulatedQuantumLayer}
+    )
     return modelo
 
-def preparar_imagen(img, modelo_nombre):
-    target_size = (299, 299) if "xception" in modelo_nombre.lower() else (224, 224)
+def preparar_imagen(img):
+    target_size = (224, 224)
     img = img.resize(target_size)
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0) / 255.0
@@ -163,7 +152,7 @@ if uploaded_file is not None:
 
     if st.button("🔍 Clasificar"):
         with st.spinner("Analizando imagen..."):
-            img_array = preparar_imagen(img, modelo_seleccionado)
+            img_array = preparar_imagen(img)
             pred = modelo.predict(img_array)[0]
 
             clases = [

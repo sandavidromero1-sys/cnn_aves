@@ -1,6 +1,7 @@
 streamlit==1.26.0
-tensorflow==2.14.0
+tensorflow==2.20.0
 numpy
 Pillow
 plotly
 gdown
+

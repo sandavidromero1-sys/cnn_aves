@@ -106,7 +106,7 @@ Esta aplicación usa modelos de **inteligencia artificial** para reconocer espec
 
 ### ⚙️ Funcionalidad:
 - Permite **subir una foto** de un ave.
-- Clasifica la especie usando tres modelos (VGG16,XCEPTION Y UN MODELO CUANTICO SIMULADO CUANTICO).
+- Clasifica la especie usando tres modelos (VGG16,XCEPTION Y UN MODELO CUANTICO SIMULADO).
 - Muestra las **3 especies más probables** con su porcentaje de certeza.
 
 ### 🌱 Propósito:
@@ -204,4 +204,5 @@ if uploaded_file is not None:
                 st.image(img_especie_path, caption=f"Ejemplo de {especie_predicha}", use_container_width=True)
             else:
                 st.warning("⚠️ No hay imagen de referencia disponible para esta especie.")
+
 

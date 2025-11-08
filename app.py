@@ -10,12 +10,12 @@ from utils import predict
 # 🎨 CONFIGURACIÓN BÁSICA
 # ==========================
 st.set_page_config(
-    page_title="Clasificador Cuántico de Aves Colombianas",
+    page_title="Prueba de Modelos CNN para Aves",
     page_icon="🦅",
     layout="wide",
 )
 
-# Estilo visual personalizado (color de fondo, textos, botones)
+# Estilo visual personalizado
 st.markdown("""
     <style>
     .stApp {
@@ -41,14 +41,12 @@ st.markdown("""
 # ==========================
 MODELS_DIR = "models"
 
-# ✅ IDs de tus modelos reales en Google Drive
+# IDs de Google Drive
 XCEPTION_ID = "1rOSSNrFkSNMpPil16qYMTEVJgu2PLJx8"
 VGG16_ID = "1CtUBQxsPkwo89vr4fjbsp54gzJOus0xZ"
 
 def descargar_modelo(file_id, nombre_local):
-    """
-    Descarga el modelo desde Google Drive a la carpeta models/
-    """
+    """Descarga el modelo desde Google Drive si no existe."""
     os.makedirs(MODELS_DIR, exist_ok=True)
     ruta_local = os.path.join(MODELS_DIR, nombre_local)
     if not os.path.exists(ruta_local):
@@ -59,9 +57,7 @@ def descargar_modelo(file_id, nombre_local):
 
 @st.cache_resource
 def load_selected_model(model_name: str):
-    """
-    Carga el modelo Xception o VGG16 según elección del usuario.
-    """
+    """Carga el modelo Xception o VGG16 según elección del usuario."""
     try:
         if model_name == "Xception":
             path = descargar_modelo(XCEPTION_ID, "modelo_xception.keras")
@@ -135,18 +131,18 @@ BIRD_INFO = {
 # 🎛 SIDEBAR
 # ==========================
 with st.sidebar:
-    st.title("🦅 Clasificador de Aves Cuántico")
+    st.title("🦅 Prueba de Modelos CNN")
     st.markdown(
-        "Selecciona el modelo de deep learning con el que deseas analizar tus imágenes de aves."
+        "Selecciona el modelo CNN que deseas probar para clasificar imágenes de aves colombianas."
     )
 
     model_name = st.selectbox(
-        "📘 Modelo de clasificación",
+        "📘 Modelo CNN",
         ["Xception", "VGG16"],
-        help="Puedes probar y comparar los resultados entre ambos modelos."
+        help="Compara los resultados entre diferentes modelos CNN."
     )
 
-    st.markdown("### 🐦 Especies disponibles")
+    st.markdown("### 🐦 Especies reconocidas")
     for key, info in BIRD_INFO.items():
         st.markdown(
             f"- **{info['common']}**  \n"
@@ -155,15 +151,17 @@ with st.sidebar:
         )
 
     st.markdown("---")
-    st.caption("💡 Consejo: usa imágenes nítidas, centradas y con buena iluminación para mejores resultados.")
+    st.caption("💡 Consejo: usa imágenes centradas y bien iluminadas para obtener mejores resultados.")
 
+# ==========================
 # Cargar modelo seleccionado
+# ==========================
 model = load_selected_model(model_name)
 
 # ==========================
 # 🖼 INTERFAZ PRINCIPAL
 # ==========================
-st.markdown("## 📸 Clasifica tu imagen de ave")
+st.markdown("## 📸 Prueba tu imagen con distintos modelos CNN")
 
 col_left, col_right = st.columns([1.2, 1])
 
@@ -176,7 +174,7 @@ if uploaded_file:
     img = Image.open(uploaded_file).convert("RGB")
     col_left.image(img, caption="📷 Imagen cargada", use_column_width=True)
 
-    if col_left.button("🔍 Analizar imagen"):
+    if col_left.button("🔍 Analizar imagen con modelo seleccionado"):
         with st.spinner(f"Ejecutando modelo {model_name}..."):
             results = predict(model, img, model_type=model_name)
 
@@ -192,16 +190,16 @@ if uploaded_file:
             )
 
             with col_right:
-                st.markdown("### ✅ Resultado principal")
+                st.markdown("### ✅ Predicción más probable")
                 st.success(
-                    f"Es muy probable que sea **{best_info['common']}** "
-                    f"(*{best_info['scientific']}*)\n\n"
-                    f"Confianza del modelo: **{best_prob*100:.2f}%**"
+                    f"Modelo: **{model_name}**\n\n"
+                    f"Ave: **{best_info['common']}** (*{best_info['scientific']}*)\n\n"
+                    f"Confianza: **{best_prob*100:.2f}%**"
                 )
-                st.markdown("#### 📝 Descripción")
+                st.markdown("#### 📝 Descripción del ave")
                 st.write(best_info["description"])
 
-            st.markdown("### 📊 Predicciones del modelo")
+            st.markdown("### 📊 Predicciones completas del modelo")
             labels = []
             probs = []
             for name, prob in results:
@@ -213,4 +211,6 @@ if uploaded_file:
             st.bar_chart(df)
 
 else:
-    col_right.info("👈 Sube una imagen a la izquierda para ver aquí la predicción y la descripción del ave.")
+    col_right.info(
+        "👈 Sube una imagen a la izquierda para probar distintos modelos CNN y ver la predicción junto con la descripción del ave."
+    )

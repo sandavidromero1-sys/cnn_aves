@@ -1,6 +1,7 @@
-streamlit>=1.27.0
+streamlit==1.39.0
 tensorflow==2.20.0
-numpy
-Pillow
-plotly
+keras==3.10.0
 gdown
+pillow
+pandas
+

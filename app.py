@@ -18,19 +18,29 @@ st.set_page_config(
 # Estilo visual personalizado
 st.markdown("""
     <style>
+    /* Fondo principal y barra lateral */
     .stApp {
-        background-color: #f0f5f5;
-        color: #002b36;
+        background-color: #001f3f;  /* azul oscuro */
+        color: white;
     }
+    .css-1d391kg {  /* barra lateral */
+        background-color: #001f3f;
+        color: white;
+    }
+    /* Botones */
     .stButton>button {
-        background-color: #004d4d;
+        background-color: #004080;
         color: white;
         border-radius: 10px;
         height: 2.5em;
         width: 100%;
     }
     .stButton>button:hover {
-        background-color: #007777;
+        background-color: #0066cc;
+        color: white;
+    }
+    /* Texto dentro de Markdown */
+    .stMarkdown {
         color: white;
     }
     </style>
@@ -75,56 +85,26 @@ def load_selected_model(model_name: str):
 # 🐦 INFO DE TUS ESPECIES
 # ==========================
 BIRD_INFO = {
-    "Accipiter_bicolor": {
-        "common": "Gavilán bicolor",
-        "scientific": "Accipiter bicolor",
-        "description": "Ave rapaz de tamaño mediano con partes superiores oscuras y partes inferiores blancas con rayas finas."
-    },
-    "Ardea_cocoi": {
-        "common": "Garza mora",
-        "scientific": "Ardea cocoi",
-        "description": "Gran garza de plumaje gris y blanco, muy común en humedales y orillas de ríos."
-    },
-    "Buteo_albigula": {
-        "common": "Aguililla pechiblanca",
-        "scientific": "Buteo albigula",
-        "description": "Ave rapaz de montaña con pecho blanco y alas anchas. Caza pequeños mamíferos y aves."
-    },
-    "Cathartes_burrovianus": {
-        "common": "Gallinazo sabanero",
-        "scientific": "Cathartes burrovianus",
-        "description": "Zopilote de sabana con cabeza desnuda y amarillenta, conocido por su vuelo bajo en áreas abiertas."
-    },
-    "Chondrohierax_uncinatus": {
-        "common": "Gavilán caracolero",
-        "scientific": "Chondrohierax uncinatus",
-        "description": "Especialista en alimentarse de caracoles; tiene un pico curvado ideal para extraerlos."
-    },
-    "Dryocopus_lineatus": {
-        "common": "Carpintero lineado",
-        "scientific": "Dryocopus lineatus",
-        "description": "Carpintero grande de color negro con una llamativa cresta roja. Golpetea árboles en busca de insectos."
-    },
-    "Egretta_thula": {
-        "common": "Garceta nívea",
-        "scientific": "Egretta thula",
-        "description": "Garza blanca elegante con patas negras y pies amarillos, habitual en lagunas y manglares."
-    },
-    "Falco_columbarius": {
-        "common": "Halcón esmerejón",
-        "scientific": "Falco columbarius",
-        "description": "Pequeño halcón cazador de vuelo rápido, se alimenta de aves pequeñas y es muy ágil."
-    },
-    "Melanerpes_formicivorus": {
-        "common": "Carpintero bellotero",
-        "scientific": "Melanerpes formicivorus",
-        "description": "Carpintero social que almacena bellotas en huecos de árboles; común en bosques templados."
-    },
-    "Sarcoramphus_papa": {
-        "common": "Zopilote rey",
-        "scientific": "Sarcoramphus papa",
-        "description": "Imponente buitre de cabeza multicolor y gran tamaño, símbolo de los bosques tropicales."
-    },
+    "Accipiter_bicolor": {"common": "Gavilán bicolor", "scientific": "Accipiter bicolor",
+                          "description": "Ave rapaz de tamaño mediano con partes superiores oscuras y partes inferiores blancas con rayas finas."},
+    "Ardea_cocoi": {"common": "Garza mora", "scientific": "Ardea cocoi",
+                    "description": "Gran garza de plumaje gris y blanco, muy común en humedales y orillas de ríos."},
+    "Buteo_albigula": {"common": "Aguililla pechiblanca", "scientific": "Buteo albigula",
+                       "description": "Ave rapaz de montaña con pecho blanco y alas anchas. Caza pequeños mamíferos y aves."},
+    "Cathartes_burrovianus": {"common": "Gallinazo sabanero", "scientific": "Cathartes burrovianus",
+                              "description": "Zopilote de sabana con cabeza desnuda y amarillenta, conocido por su vuelo bajo en áreas abiertas."},
+    "Chondrohierax_uncinatus": {"common": "Gavilán caracolero", "scientific": "Chondrohierax uncinatus",
+                                "description": "Especialista en alimentarse de caracoles; tiene un pico curvado ideal para extraerlos."},
+    "Dryocopus_lineatus": {"common": "Carpintero lineado", "scientific": "Dryocopus lineatus",
+                           "description": "Carpintero grande de color negro con una llamativa cresta roja. Golpetea árboles en busca de insectos."},
+    "Egretta_thula": {"common": "Garceta nívea", "scientific": "Egretta thula",
+                      "description": "Garza blanca elegante con patas negras y pies amarillos, habitual en lagunas y manglares."},
+    "Falco_columbarius": {"common": "Halcón esmerejón", "scientific": "Falco columbarius",
+                          "description": "Pequeño halcón cazador de vuelo rápido, se alimenta de aves pequeñas y es muy ágil."},
+    "Melanerpes_formicivorus": {"common": "Carpintero bellotero", "scientific": "Melanerpes formicivorus",
+                                "description": "Carpintero social que almacena bellotas en huecos de árboles; común en bosques templados."},
+    "Sarcoramphus_papa": {"common": "Zopilote rey", "scientific": "Sarcoramphus papa",
+                          "description": "Imponente buitre de cabeza multicolor y gran tamaño, símbolo de los bosques tropicales."},
 }
 
 # ==========================
